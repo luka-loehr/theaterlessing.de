@@ -8,6 +8,7 @@ class Soundboard {
             'Desert Eagle Gunshot Sound Effect.mp3',
             'Die Feldlerche Vogel des Jahres 2019.mp3',
             'Human Whistling Sound Effect 10.mp3',
+            'Love Me Tender Elvis Presley.mp3',
             'Mendelssohn Wedding March.mp3',
             'Nightingale Songs.mp3',
             'Old Phone Ringtone.mp3'

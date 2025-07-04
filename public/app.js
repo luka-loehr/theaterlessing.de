@@ -201,6 +201,29 @@ class Soundboard {
                 // For wedding march, skip first 3 seconds
                 sound.source.start(0, 3);
                 this.log(`Playing ${filename} - starting from 3 seconds`);
+            } else if (filename === 'Love Me Tender Elvis Presley.mp3') {
+                // For Love Me Tender, play normally
+                sound.source.start(0);
+                this.log(`Playing ${filename} - will start fade at 1:41`);
+                
+                // Schedule automatic fade out starting at 1:41 (101 seconds)
+                const fadeStartTime = 101; // 1 minute 41 seconds
+                const fadeOutDuration = 10; // 10 second fade
+                
+                // Start fade out at 1:41
+                setTimeout(() => {
+                    if (sound.isPlaying && this.currentlyPlaying === filename) {
+                        this.log(`Starting automatic 10s fade out for ${filename}`);
+                        sound.gainNode.gain.linearRampToValueAtTime(0, this.audioContext.currentTime + fadeOutDuration);
+                        
+                        // Stop after fade completes (at 1:51)
+                        setTimeout(() => {
+                            if (sound.source && sound.isPlaying) {
+                                sound.source.stop();
+                            }
+                        }, fadeOutDuration * 1000);
+                    }
+                }, fadeStartTime * 1000);
             } else {
                 sound.source.start(0);
             }
@@ -249,6 +272,35 @@ class Soundboard {
             try {
                 // Immediately remove playing class to shrink button
                 button.classList.remove('playing');
+                
+                // Check if this is the phone ringtone - if so, stop immediately without fade
+                if (filename === 'Old Phone Ringtone.mp3') {
+                    this.log(`Stopping ${filename} immediately without fade`);
+                    
+                    if (sound.source) {
+                        try {
+                            sound.source.stop();
+                            sound.source.disconnect();
+                            sound.gainNode.disconnect();
+                        } catch (e) {
+                            this.log(`Error stopping ${filename}: ${e.message}`, 'warn');
+                        }
+                    }
+                    
+                    sound.isPlaying = false;
+                    sound.source = null;
+                    sound.gainNode = null;
+                    
+                    if (this.currentlyPlaying === filename) {
+                        this.currentlyPlaying = null;
+                        this.updateStatus('Ready');
+                    }
+                    
+                    resolve();
+                    return;
+                }
+                
+                // For all other sounds, do the normal fade out
                 button.classList.add('fading');
                 
                 const currentTime = this.audioContext.currentTime;
