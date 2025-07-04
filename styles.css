@@ -1,0 +1,118 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    background-color: #0a0a0a;
+    color: #ffffff;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+}
+
+.container {
+    width: 100%;
+    max-width: 1200px;
+    text-align: center;
+}
+
+h1 {
+    font-size: 2.5rem;
+    font-weight: 200;
+    margin-bottom: 3rem;
+    letter-spacing: 0.05em;
+}
+
+.soundboard-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 20px;
+    padding: 20px;
+}
+
+.sound-button {
+    background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
+    border: 1px solid #333;
+    border-radius: 12px;
+    padding: 30px 20px;
+    font-size: 1.1rem;
+    color: #ffffff;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+    min-height: 120px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    word-wrap: break-word;
+}
+
+.sound-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(255, 255, 255, 0.1);
+    border-color: #555;
+}
+
+.sound-button:active {
+    transform: translateY(0);
+}
+
+.sound-button.playing {
+    background: linear-gradient(135deg, #2a4a2a 0%, #3d5d3d 100%);
+    border-color: #4a7a4a;
+    animation: pulse 2s infinite;
+}
+
+.sound-button::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle, rgba(255, 255, 255, 0.05) 0%, transparent 70%);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.sound-button:hover::before {
+    opacity: 1;
+}
+
+@keyframes pulse {
+    0% {
+        box-shadow: 0 0 0 0 rgba(100, 255, 100, 0.4);
+    }
+    70% {
+        box-shadow: 0 0 0 20px rgba(100, 255, 100, 0);
+    }
+    100% {
+        box-shadow: 0 0 0 0 rgba(100, 255, 100, 0);
+    }
+}
+
+@media (max-width: 768px) {
+    h1 {
+        font-size: 2rem;
+        margin-bottom: 2rem;
+    }
+    
+    .soundboard-grid {
+        grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+        gap: 15px;
+        padding: 15px;
+    }
+    
+    .sound-button {
+        padding: 25px 15px;
+        font-size: 1rem;
+        min-height: 100px;
+    }
+}
