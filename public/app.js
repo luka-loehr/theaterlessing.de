@@ -226,12 +226,24 @@ class Soundboard {
                 setTimeout(() => {
                     if (sound.isPlaying && this.currentlyPlaying === filename) {
                         this.log(`Starting automatic 10s fade out for ${filename}`);
+                        
+                        // Cancel any ongoing ramps and set current value to 1
+                        sound.gainNode.gain.cancelScheduledValues(this.audioContext.currentTime);
+                        sound.gainNode.gain.setValueAtTime(1, this.audioContext.currentTime);
+                        
+                        // Start fade out to 0 over 10 seconds
                         sound.gainNode.gain.linearRampToValueAtTime(0, this.audioContext.currentTime + fadeOutDuration);
                         
                         // Stop after fade completes (at 1:51)
                         setTimeout(() => {
                             if (sound.source && sound.isPlaying) {
                                 sound.source.stop();
+                                sound.isPlaying = false;
+                                button.classList.remove('playing');
+                                if (this.currentlyPlaying === filename) {
+                                    this.currentlyPlaying = null;
+                                    this.updateStatus('Ready');
+                                }
                             }
                         }, fadeOutDuration * 1000);
                     }

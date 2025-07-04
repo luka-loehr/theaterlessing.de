@@ -56,12 +56,22 @@ app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, 'public', 'index.html'));
 });
 
-app.listen(PORT, () => {
-    console.log(`[SERVER] Soundboard server running on http://localhost:${PORT}`);
+app.listen(PORT, async () => {
+    const url = `http://localhost:${PORT}`;
+    console.log(`[SERVER] Soundboard server running on ${url}`);
     if (isDev) {
         console.log('[DEBUG] Available routes:');
         console.log('[DEBUG]   GET / - Main soundboard page');
         console.log('[DEBUG]   GET /api/sounds - List of available sounds');
         console.log('[DEBUG]   GET /sounds/* - Sound files');
+    }
+    
+    // Automatically open browser
+    console.log('[SERVER] Opening browser...');
+    try {
+        const open = (await import('open')).default;
+        await open(url);
+    } catch (err) {
+        console.error('[SERVER] Failed to open browser:', err.message);
     }
 });
