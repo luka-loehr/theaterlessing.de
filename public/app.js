@@ -217,13 +217,13 @@ class Soundboard {
             } else if (filename === 'Love Me Tender Elvis Presley.mp3') {
                 // For Love Me Tender, play normally
                 sound.source.start(0);
-                this.log(`Playing ${filename} - will start fade at 1:41`);
+                this.log(`Playing ${filename} - will start fade at 0:47`);
                 
-                // Schedule automatic fade out starting at 1:41 (101 seconds)
-                const fadeStartTime = 101; // 1 minute 41 seconds
+                // Schedule automatic fade out starting at 0:47 (47 seconds)
+                const fadeStartTime = 47; // 47 seconds
                 const fadeOutDuration = 10; // 10 second fade
                 
-                // Start fade out at 1:41
+                // Start fade out at 0:47
                 setTimeout(() => {
                     if (sound.isPlaying && this.currentlyPlaying === filename) {
                         this.log(`Starting automatic 10s fade out for ${filename}`);
@@ -235,7 +235,7 @@ class Soundboard {
                         // Start fade out to 0 over 10 seconds
                         sound.gainNode.gain.linearRampToValueAtTime(0, this.audioContext.currentTime + fadeOutDuration);
                         
-                        // Stop after fade completes (at 1:51)
+                        // Stop after fade completes (at 0:57)
                         setTimeout(() => {
                             if (sound.source && sound.isPlaying) {
                                 sound.source.stop();
