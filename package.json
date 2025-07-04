@@ -5,7 +5,11 @@
   "main": "server.js",
   "scripts": {
     "start": "node server.js",
-    "dev": "NODE_ENV=development nodemon server.js"
+    "dev": "NODE_ENV=development nodemon server.js",
+    "build": "echo 'No build required'"
+  },
+  "engines": {
+    "node": ">=14.0.0"
   },
   "keywords": ["soundboard", "theater", "audio"],
   "author": "",
