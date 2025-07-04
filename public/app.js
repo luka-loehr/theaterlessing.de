@@ -127,7 +127,19 @@ class Soundboard {
             
             const button = document.createElement('button');
             button.className = 'sound-button';
-            button.textContent = filename.replace(/\.[^/.]+$/, '');
+            
+            // German display names
+            const displayNames = {
+                'Desert Eagle Gunshot Sound Effect.mp3': 'Waffe',
+                'Die Feldlerche Vogel des Jahres 2019.mp3': 'Lerche',
+                'Human Whistling Sound Effect 10.mp3': 'Pfeifen',
+                'Love Me Tender Elvis Presley.mp3': 'Love Me Tender',
+                'Mendelssohn Wedding March.mp3': 'Hochzeit',
+                'Nightingale Songs.mp3': 'Nachtigall',
+                'Old Phone Ringtone.mp3': 'Telefon'
+            };
+            
+            button.textContent = displayNames[filename] || filename.replace(/\.[^/.]+$/, '');
             button.dataset.filename = filename;
             
             button.addEventListener('click', () => this.toggleSound(filename, button));
@@ -303,10 +315,16 @@ class Soundboard {
                 // For all other sounds, do the normal fade out
                 button.classList.add('fading');
                 
-                const currentTime = this.audioContext.currentTime;
-                sound.gainNode.gain.linearRampToValueAtTime(0, currentTime + this.fadeTime);
+                // Custom fade duration for specific sounds
+                let fadeDuration = this.fadeTime; // Default 1.5 seconds
+                if (filename === 'Mendelssohn Wedding March.mp3') {
+                    fadeDuration = 5; // 5 second fade for wedding march
+                }
                 
-                this.log(`Started fade out: ${filename}, duration: ${this.fadeTime}s`);
+                const currentTime = this.audioContext.currentTime;
+                sound.gainNode.gain.linearRampToValueAtTime(0, currentTime + fadeDuration);
+                
+                this.log(`Started fade out: ${filename}, duration: ${fadeDuration}s`);
                 
                 // Update status immediately
                 if (this.currentlyPlaying === filename) {
@@ -332,7 +350,7 @@ class Soundboard {
                     button.classList.remove('fading');
                     
                     resolve();
-                }, this.fadeTime * 1000);
+                }, fadeDuration * 1000);
             } catch (error) {
                 this.log(`Error during fade out ${filename}: ${error.message}`, 'error');
                 button.classList.remove('playing', 'fading');
