@@ -136,7 +136,8 @@ class Soundboard {
                 'Love Me Tender Elvis Presley.mp3': 'Love Me Tender',
                 'Mendelssohn Wedding March.mp3': 'Hochzeit',
                 'Nightingale Songs.mp3': 'Nachtigall',
-                'Old Phone Ringtone.mp3': 'Telefon'
+                'Old Phone Ringtone.mp3': 'Telefon',
+                'Pausenmusik.mp3': 'Pausenmusik'
             };
             
             button.textContent = displayNames[filename] || filename.replace(/\.[^/.]+$/, '');
