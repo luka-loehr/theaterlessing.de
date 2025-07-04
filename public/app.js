@@ -215,9 +215,9 @@ class Soundboard {
                 sound.source.start(0, 3);
                 this.log(`Playing ${filename} - starting from 3 seconds`);
             } else if (filename === 'Pausenmusik.mp3') {
-                // For Pausenmusik, skip first 4 seconds
-                sound.source.start(0, 4);
-                this.log(`Playing ${filename} - starting from 4 seconds`);
+                // For Pausenmusik, skip first 5 seconds
+                sound.source.start(0, 5);
+                this.log(`Playing ${filename} - starting from 5 seconds`);
             } else if (filename === 'Love Me Tender Elvis Presley.mp3') {
                 // For Love Me Tender, play normally
                 sound.source.start(0);
