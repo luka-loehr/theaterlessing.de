@@ -332,6 +332,8 @@ class Soundboard {
                 let fadeDuration = this.fadeTime; // Default 1.5 seconds
                 if (filename === 'Mendelssohn Wedding March.mp3') {
                     fadeDuration = 5; // 5 second fade for wedding march
+                } else if (filename === 'Pausenmusik.mp3') {
+                    fadeDuration = 2; // 2 second fade for Pausenmusik
                 }
                 
                 const currentTime = this.audioContext.currentTime;
